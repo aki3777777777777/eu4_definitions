@@ -15,7 +15,7 @@ def writef(path, con):
 
 df = pd.read_csv(path,sep=";",header=None)
 
-for item in df.loc[:,[0]].values:
+for item in df.loc[:].values:
     all_provinces += str(item[0]) + " "
 for item in df[df[5] == 'Sea'][0].values:
     sea_provinces += str(item) + " "
@@ -34,3 +34,9 @@ writef('out/map/superregion.txt', "india_superregion = {france_region}") #一時
 for item in df.loc[:,[0]].values:
     text += str(item[0]) + " = {position={0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000} \nrotation={0.000 0.000 0.000 0.000 0.000 0.000 0.000} \nheight={0.000 0.000 0.000 0.000 0.000 0.000 0.000}}\n"
 writef('out/map/positions.txt',text) 
+
+os.makedirs('out/history/provinces', exist_ok=True)
+
+for item in df.loc[:].values:
+    path2 = 'out/history/provinces/' + str(item[0]) + '-' + str(item[4]) + '.txt'
+    writef(path2, 'add_core = SWE\nowner = SWE\ncontroller = SWE\nculture = swedish\nreligion = catholic\nhre = no\nbase_tax = 1\nbase_production = 1\ntrade_goods = grain\nbase_manpower = 1\ncapital = "cpital"is_city = yes\ndiscovered_by = western\nextra_cost = 16')
